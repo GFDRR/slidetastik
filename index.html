@@ -56,20 +56,24 @@ var afterMap = new mapboxgl.Map({
     
 afterMap.on('load', function() {
 
-// Create raster layer from OAM
-    afterMap.addSource('rasterTest', {
+    
+afterMap.addLayer({
+    'id': 'wms-test-layer',
+    'type': 'raster',
+    'source': {
         'type': 'raster',
-        'tiles': 'https://tiles.openaerialmap.org/5b8a489c3c07e100077c4862/0/5b8a489c3c07e100077c4863/wmts?SERVICE=WMTS&REQUEST=GetTile&LAYER=SUZA_2017_01_30&TILEMATRIX=EPSG:900913:{z}&TILEMATRIXSET=EPSG:900913&format=image%2Fpng&TileCol={x}&TileRow={y}',
-        'tileSize': 256,
-    });
+        'tiles': [
 
-    afterMap.addLayer({
-        'id':'rasterTest',
-        'source': 'rasterTest',
-        'type': 'raster',
-        'visibility': 'visible',
-        'source-layer': 'SUZA_2017_01_30' //'rasterTest',
-    });
+'https://tiles.openaerialmap.org/5b8a489c3c07e100077c4862/0/5b8a489c3c07e100077c4863/wmts?SERVICE=WMTS&REQUEST=GetTile&LAYER=SUZA_2017_01_30&TILEMATRIX=EPSG:900913:{z}&TILEMATRIXSET=EPSG:900913&format=image%2Fpng&TileCol={x}&TileRow={y}'         
+            
+//            'https://tiles.openaerialmap.org/5b8a489c3c07e100077c4862/0/5b8a489c3c07e100077c4863/wmts?bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&srs=EPSG:3857&transparent=true&width=256&height=256&layers=SUZA_2017_01_30'
+//               'https://geodata.state.nj.us/imagerywms/Natural2015?bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&srs=EPSG:3857&transparent=true&width=256&height=256&layers=Natural2015'        
+        ],
+        'tileSize': 256
+    },
+    'paint': {}
+    });    
+    
     
 
 });    
