@@ -40,14 +40,14 @@ body * {
 <div id='after' class='map'></div>
 <script>
 mapboxgl.accessToken = 'pk.eyJ1IjoibnVhbGFjb3dhbiIsImEiOiJPLXBKU0pVIn0.vvBTkh_wd3dHhu6Y_llAOA';
-    
-var beforeMap = new mapboxgl.Map({
-    container: 'before',
-    style: 'mapbox://styles/mapbox/satellite-v9',
-    center: [39.30633544921875, -6.203317341812094],
-    zoom: 14
-});
 
+// var beforeMap = new mapboxgl.Map({
+//     container: 'before',
+//     style: 'mapbox://styles/mapbox/satellite-v9',
+//     center: [39.30633544921875, -6.203317341812094],
+//     zoom: 14
+// });
+    
 var afterMap = new mapboxgl.Map({
     container: 'after',
     style: 'mapbox://styles/nualacowan/cjlj7hd270dx82sml1bz677f3',
@@ -72,10 +72,10 @@ afterMap.on('load', function() {
     
 });    
 
-var map = new mapboxgl.Compare(beforeMap, afterMap, {
+// var map = new mapboxgl.Compare(beforeMap, afterMap, {
     // Set this to enable comparing two maps by mouse movement:
     // mousemove: true
-});
+// });
 
 
 </script>
