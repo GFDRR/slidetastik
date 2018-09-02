@@ -1,0 +1,35 @@
+var story={
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "story": "test",
+        "timestamp": 1535817754486
+      },
+      "geometry": {
+        "coordinates": [
+          39.22458,
+          -6.198359
+        ],
+        "type": "Point"
+      },
+      "id": "4e4ec10546047cfd78c3799a8cb457f6"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "story": "test",
+        "timestamp": 1489347578052
+      },
+      "geometry": {
+        "coordinates": [
+          39.240392,
+          -6.199656
+        ],
+        "type": "Point"
+      },
+      "id": "63c07d42ace0e72fa053dd2683df6ffe"
+    }
+  ],
+  "type": "FeatureCollection"
+}
