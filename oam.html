@@ -40,47 +40,42 @@ body * {
 <div id='after' class='map'></div>
 <script>
 mapboxgl.accessToken = 'pk.eyJ1IjoibnVhbGFjb3dhbiIsImEiOiJPLXBKU0pVIn0.vvBTkh_wd3dHhu6Y_llAOA';
-var beforeMap = new mapboxgl.Map({
-    container: 'before',
-    style: 'mapbox://styles/mapbox/satellite-v9',
-    center: [39.30633544921875, -6.203317341812094],
-    zoom: 14
-});
 
+// var beforeMap = new mapboxgl.Map({
+//     container: 'before',
+//     style: 'mapbox://styles/mapbox/satellite-v9',
+//     center: [39.30633544921875, -6.203317341812094],
+//     zoom: 14
+// });
+    
 var afterMap = new mapboxgl.Map({
     container: 'after',
-    style: 'mapbox://styles/nualacowan/cjlj7hd270dx82sml1bz677f3',
+    style: 'mapbox://styles/mapbox/light-v9',
     center: [39.30633544921875, -6.203317341812094],
     zoom: 14
 });
     
 afterMap.on('load', function() {
-
     
-afterMap.addLayer({
-    'id': 'wms-test-layer',
-    'type': 'raster',
-    'source': {
+    afterMap.addLayer({
+        'id': 'tms-after-layer',
         'type': 'raster',
-        'tiles': [
-
-//    'https://tiles.openaerialmap.org/5b8a489c3c07e100077c4862/0/5b8a489c3c07e100077c4863/wmts?bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&srs=EPSG:3857&transparent=true&width=256&height=256&layers=SUZA_2017_01_30'                   
-   'https://geodata.state.nj.us/imagerywms/Natural2015?bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&srs=EPSG:3857&transparent=true&width=256&height=256&layers=Natural2015'        
-
-        ],
-    'tileSize': 256
-    },
-    'paint': {}
-    });    
+        'source': {
+            'type': 'raster',
+            'tiles': [
+                'https://tiles.openaerialmap.org/5b8a489c3c07e100077c4862/0/5b8a489c3c07e100077c4863/{z}/{x}/{y}'
+            ],
+            'tileSize': 256
+        },
+        'paint': {}
+    }, 'aeroway-taxiway');
     
-    
-
 });    
 
-var map = new mapboxgl.Compare(beforeMap, afterMap, {
+// var map = new mapboxgl.Compare(beforeMap, afterMap, {
     // Set this to enable comparing two maps by mouse movement:
     // mousemove: true
-});
+// });
 
 
 </script>
