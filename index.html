@@ -2,26 +2,161 @@
 <html>
 <head>
     <meta charset='utf-8' />
-    <title>Display a map</title>
+    <title>Swipe between maps - TEST</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    
+    <script src='story.geojson'></script>
+    <script src='boundary.geojson'></script>
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.js'></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.1.0/mapbox-gl-compare.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.css' rel='stylesheet' />
-    <style>
-        body { margin:0; padding:0; }
-        #map { position:absolute; top:0; bottom:0; width:100%; }
-    </style>
-</head>
-<body>
+    <link href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.1.0/mapbox-gl-compare.css' rel='stylesheet' type='text/css' />
 
-<div id='map'></div>
+
+    <style>
+body {
+    overflow: hidden;
+    margin:0; padding:0;
+}
+
+body * {
+   -webkit-touch-callout: none;
+     -webkit-user-select: none;
+        -moz-user-select: none;
+         -ms-user-select: none;
+             user-select: none;
+}
+
+header {
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    right: 0;
+    text-transform: uppercase;
+    z-index: 1;
+    background: rgba(2,2,2,0.8);
+    text-align: center;
+    color: #fff;
+}
+
+
+        
+.logo {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+}
+.map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+}
+.custom-control {
+    color: #000;
+    background: #fff;
+    padding: 8px 32px;
+    border-radius: 4px;
+    margin: 8px;
+}
+#ZMIIcon {
+   background-image: url('ZMIDrop.svg');
+    background-size: cover;
+    width: 50px;
+    height: 71px;
+    cursor: pointer;
+}
+
+</style>
+
+</head>
+
+
+<body>
+<div class="prose">
+    <header class="bg-darken75 color-white h-auto-mm h60">
+      <div class='flex-parent flex-parent--space-between-main w-full'>
+        <div class="flex-child ml240 mt24 mb12"><h3>Stone Town After ZMI</h3></div>
+      </div>
+    </header>
+    
+</div>
+
+<div id='before' class='map'></div>
+<div id='after' class='map'></div>
 <script>
-mapboxgl.accessToken = 'pk.eyJ1IjoiY2dpb3ZhbmRvIiwiYSI6ImNqbGo2ajZiZjA4MmYza25kMHk1M29yazkifQ.MBw3I2cobNxI51uiLHmwTQ';
-var map = new mapboxgl.Map({
-    container: 'map', // container id
-    style: 'mapbox://styles/mapbox/streets-v9', // stylesheet location
-    center: [39.30633544921875, -6.203317341812094], // starting position [lng, lat]
-    zoom: 14 // starting zoom
+mapboxgl.accessToken = 'pk.eyJ1IjoibnVhbGFjb3dhbiIsImEiOiJPLXBKU0pVIn0.vvBTkh_wd3dHhu6Y_llAOA';
+var beforeMap = new mapboxgl.Map({
+    container: 'before',
+    style: 'mapbox://styles/mapbox/satellite-v9',
+    center: [39.30633544921875, -6.203317341812094],
+    zoom: 14
 });
+
+class BeforTitle {};
+BeforTitle.prototype.onAdd = function(beforeMap) {
+    this.beforeMap = beforeMap;
+    this.div = document.createElement('div');
+    this.div.className = 'custom-control';
+    this.div.textContent = 'Before';
+    return this.div;
+};
+beforeMap.addControl(new BeforTitle(),'top-left');
+
+
+
+var afterMap = new mapboxgl.Map({
+    container: 'after',
+    style: 'mapbox://styles/pratikyadav/cjldke8fv3c3r2row6hvk5k7z',
+    center: [39.30633544921875, -6.203317341812094],
+    zoom: 14
+});
+
+class AfterTitle {};
+AfterTitle.prototype.onAdd = function(afterMap) {
+    this.afterMap = afterMap;
+    this.div = document.createElement('div');
+    this.div.className = 'custom-control';
+    this.div.textContent = 'After (ZMI Data)';
+    return this.div;
+};
+afterMap.addControl(new AfterTitle(),'top-right');
+
+var map = new mapboxgl.Compare(beforeMap, afterMap, {
+    // Set this to enable comparing two maps by mouse movement:
+    // mousemove: true
+});
+
+afterMap.addControl(new mapboxgl.NavigationControl());
+
+afterMap.on('load', function () {
+
+    afterMap.addLayer({
+        'id': 'boundary',
+        'type': 'line',
+        'source': {
+            'type': 'geojson',
+            'data': boundary},
+        'layout': {},
+        'paint': {
+            'line-color': '#f00',
+            
+        }
+    });
+    
+    
+});
+
+var popupZMI = new mapboxgl.Popup({ offset: 25 }).setText('ZMI Processed Data');
+
+var ZMIIcon = document.createElement('div');
+ZMIIcon.id = 'ZMIIcon';
+
+new mapboxgl.Marker(ZMIIcon).setLngLat([39.232250154018395,-6.183118188182211]).setPopup(popupZMI).addTo(afterMap);
+
+
 </script>
 
 </body>
