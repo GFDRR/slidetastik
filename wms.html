@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset='utf-8' />
-    <title>Add a WMS source</title>
+    <title>Swipe between maps - TEST</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.48.0/mapbox-gl.css' rel='stylesheet' />
@@ -13,31 +13,76 @@
 </head>
 <body>
 
-<div id='map'></div>
+<style>
+body {
+    overflow: hidden;
+}
+
+body * {
+   -webkit-touch-callout: none;
+     -webkit-user-select: none;
+        -moz-user-select: none;
+         -ms-user-select: none;
+             user-select: none;
+}
+
+.map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+}
+</style>
+<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.1.0/mapbox-gl-compare.js'></script>
+<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.1.0/mapbox-gl-compare.css' type='text/css' />
+
+<div id='before' class='map'></div>
+<div id='after' class='map'></div>
 <script>
-mapboxgl.accessToken = 'pk.eyJ1IjoiY2dpb3ZhbmRvIiwiYSI6Inh1bFVOU0EifQ.IuYaRm782biFb4g8rmI5gQ';
-var map = new mapboxgl.Map({
-    container: 'map',
-    style: 'mapbox://styles/mapbox/light-v9',
-    zoom: 8,
-    center: [-74.5447, 40.6892]
+mapboxgl.accessToken = 'pk.eyJ1IjoibnVhbGFjb3dhbiIsImEiOiJPLXBKU0pVIn0.vvBTkh_wd3dHhu6Y_llAOA';
+var beforeMap = new mapboxgl.Map({
+    container: 'before',
+    style: 'mapbox://styles/mapbox/satellite-v9',
+    center: [39.30633544921875, -6.203317341812094],
+    zoom: 14
 });
 
-map.on('load', function() {
+var afterMap = new mapboxgl.Map({
+    container: 'after',
+    style: 'mapbox://styles/nualacowan/cjlj7hd270dx82sml1bz677f3',
+    center: [39.30633544921875, -6.203317341812094],
+    zoom: 14
+});
+    
+afterMap.on('load', function() {
 
-    map.addLayer({
-        'id': 'wms-test-layer',
+    
+afterMap.addLayer({
+    'id': 'wms-test-layer',
+    'type': 'raster',
+    'source': {
         'type': 'raster',
-        'source': {
-            'type': 'raster',
-            'tiles': [
-                'https://geodata.state.nj.us/imagerywms/Natural2015?bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&srs=EPSG:3857&transparent=true&width=256&height=256&layers=Natural2015'
-            ],
-            'tileSize': 256
-        },
-        'paint': {}
-    });
+        'tiles': [
+
+//    'https://tiles.openaerialmap.org/5b8a489c3c07e100077c4862/0/5b8a489c3c07e100077c4863/wmts?bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&srs=EPSG:3857&transparent=true&width=256&height=256&layers=SUZA_2017_01_30'                   
+   'https://geodata.state.nj.us/imagerywms/Natural2015?bbox={bbox-epsg-3857}&format=image/png&service=WMS&version=1.1.1&request=GetMap&srs=EPSG:3857&transparent=true&width=256&height=256&layers=Natural2015'        
+
+        ],
+    'tileSize': 256
+    },
+    'paint': {}
+    });    
+    
+    
+
+});    
+
+var map = new mapboxgl.Compare(beforeMap, afterMap, {
+    // Set this to enable comparing two maps by mouse movement:
+    // mousemove: true
 });
+
+
 </script>
 
 </body>
