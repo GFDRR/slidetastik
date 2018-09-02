@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset='utf-8' />
-    <title>Swipe between maps - TEST</title>
+    <title>Drone Image comparisons</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     
     <script src='story.geojson'></script>
@@ -34,10 +34,10 @@ header {
     left: 0;
     right: 0;
     text-transform: uppercase;
-    z-index: 1;
-    background: rgba(2,2,2,0.8);
+    background: rgba(147, 147, 147, 0.8);
     text-align: center;
     color: #fff;
+    z-index: 12;
 }
 
 
@@ -61,14 +61,23 @@ header {
     border-radius: 4px;
     margin: 8px;
 }
-#ZMIIcon {
+#ZMIIcon,#iconMau,#iconMalindi {
    background-image: url('ZMIDrop.svg');
     background-size: cover;
     width: 50px;
     height: 71px;
     cursor: pointer;
 }
+.mapboxgl-ctrl-top-right {
+    position: absolute;
+    z-index: 12;
 
+}
+.mapboxgl-ctrl-top-left {
+    position: absolute;
+    z-index: 99;
+
+}
 </style>
 
 </head>
@@ -78,7 +87,7 @@ header {
 <div class="prose">
     <header class="bg-darken75 color-white h-auto-mm h60">
       <div class='flex-parent flex-parent--space-between-main w-full'>
-        <div class="flex-child ml240 mt24 mb12"><h3>Stone Town After ZMI</h3></div>
+        <div class="flex-child ml240 mt24 mb12"><h3>Drone Image comparisons</h3></div>
       </div>
     </header>
     
@@ -94,7 +103,6 @@ var beforeMap = new mapboxgl.Map({
     center: [39.189643, -6.161926],
     zoom: 17
 });
-
 class BeforTitle {};
 BeforTitle.prototype.onAdd = function(beforeMap) {
     this.beforeMap = beforeMap;
@@ -104,16 +112,12 @@ BeforTitle.prototype.onAdd = function(beforeMap) {
     return this.div;
 };
 beforeMap.addControl(new BeforTitle(),'top-left');
-
-
-
 var afterMap = new mapboxgl.Map({
     container: 'after',
     style: 'mapbox://styles/pratikyadav/cjldke8fv3c3r2row6hvk5k7z',
     center: [39.189643, -6.161926],
     zoom: 17
 });
-
 class AfterTitle {};
 AfterTitle.prototype.onAdd = function(afterMap) {
     this.afterMap = afterMap;
@@ -123,16 +127,12 @@ AfterTitle.prototype.onAdd = function(afterMap) {
     return this.div;
 };
 afterMap.addControl(new AfterTitle(),'top-right');
-
 var map = new mapboxgl.Compare(beforeMap, afterMap, {
     // Set this to enable comparing two maps by mouse movement:
     // mousemove: true
 });
-
 afterMap.addControl(new mapboxgl.NavigationControl());
-
 afterMap.on('load', function () {
-
     afterMap.addLayer({
         'id': 'boundary',
         'type': 'line',
@@ -148,15 +148,21 @@ afterMap.on('load', function () {
     
     
 });
-
 var popupZMI = new mapboxgl.Popup({ offset: 25 }).setText('ZMI Processed Data');
-
 var ZMIIcon = document.createElement('div');
 ZMIIcon.id = 'ZMIIcon';
-
 new mapboxgl.Marker(ZMIIcon).setLngLat([39.191554, -6.161926]).setPopup(popupZMI).addTo(afterMap);
 
 
+var popupMau = new mapboxgl.Popup({ offset: 25 }).setText('The stadiaum now has been modified and put some light  around it');
+var iconMau = document.createElement('div');
+iconMau.id = 'iconMau';
+new mapboxgl.Marker(iconMau).setLngLat([39.19742166996002,-6.170331658365528]).setPopup(popupMau).addTo(afterMap);
+
+var popupMalindi = new mapboxgl.Popup({ offset: 25 }).setText('The stadiaum now has been modified and built in modern way');
+var iconMalindi = document.createElement('div');
+iconMalindi.id = 'iconMalindi';
+new mapboxgl.Marker(iconMalindi).setLngLat([39.195876717567444,-6.1588808523931045]).setPopup(popupMalindi).addTo(afterMap);
 </script>
 
 </body>
