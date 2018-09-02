@@ -91,8 +91,8 @@ mapboxgl.accessToken = 'pk.eyJ1IjoibnVhbGFjb3dhbiIsImEiOiJPLXBKU0pVIn0.vvBTkh_wd
 var beforeMap = new mapboxgl.Map({
     container: 'before',
     style: 'mapbox://styles/mapbox/satellite-v9',
-    center: [39.30633544921875, -6.203317341812094],
-    zoom: 14
+    center: [39.189643, -6.161926],
+    zoom: 18
 });
 
 class BeforTitle {};
@@ -110,8 +110,8 @@ beforeMap.addControl(new BeforTitle(),'top-left');
 var afterMap = new mapboxgl.Map({
     container: 'after',
     style: 'mapbox://styles/pratikyadav/cjldke8fv3c3r2row6hvk5k7z',
-    center: [39.30633544921875, -6.203317341812094],
-    zoom: 14
+    center: [39.189643, -6.161926],
+    zoom: 18
 });
 
 class AfterTitle {};
@@ -154,7 +154,7 @@ var popupZMI = new mapboxgl.Popup({ offset: 25 }).setText('ZMI Processed Data');
 var ZMIIcon = document.createElement('div');
 ZMIIcon.id = 'ZMIIcon';
 
-new mapboxgl.Marker(ZMIIcon).setLngLat([39.232250154018395,-6.183118188182211]).setPopup(popupZMI).addTo(afterMap);
+new mapboxgl.Marker(ZMIIcon).setLngLat([39.189643, -6.161926]).setPopup(popupZMI).addTo(afterMap);
 
 
 </script>
